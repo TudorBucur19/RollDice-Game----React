@@ -11,7 +11,7 @@ export class Player extends React.Component {
       return(
       <section className={this.props.className}>
         <h2 className="name" >Player</h2>
-        <p className="score" >{this.props.score}</p>
+        <p className="score" id={this.props.id}>{this.props.score}</p>
         <div className="current">
           <p className="current-label">Current</p>
           <p className="current-score" id={this.props.id}>{this.props.currentScore}</p>
