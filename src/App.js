@@ -26,18 +26,18 @@ class App extends React.Component {
    };
 
 
-  rollDice = () => {    
-      const {activePlayer, currentScore, playing} = this.state;
+  rollDice = () => {
+    if(this.state.playing){    
+      const {activePlayer, currentScore} = this.state;
       let currentDice = Math.trunc(Math.random()*6)+1;
-      if(currentDice !== 1){
-        if(playing){
+      if(currentDice !== 1){        
         currentScore[activePlayer] += currentDice;            
-        this.setState({dice: currentDice, currentScore: currentScore})
-        }
+        this.setState({dice: currentDice, currentScore: currentScore});        
       } else {
         this.setState({dice: currentDice});
         this.switchPlayer();
       }
+    }
     };
 
   switchPlayer = () => {
@@ -46,17 +46,18 @@ class App extends React.Component {
     this.setState({activePlayer: active, currentScore: [0, 0]});
   }
 
-  btnHold = () => { 
+  btnHold = () => {
+    if(this.state.playing){
     const {activePlayer, scores, currentScore} = this.state;
     let score = scores[activePlayer];
     score += currentScore[activePlayer];  
     scores[activePlayer] = score;
     this.setState({scores: scores});
     if(scores[activePlayer] >= 20){
-      this.setState({playing: false});
-      console.log("winner");
+      this.setState({playing: false, dice: 0});
     }
-    this.switchPlayer();        
+    this.switchPlayer(); 
+  };       
   };
 
   
@@ -75,14 +76,12 @@ class App extends React.Component {
         <Player 
           score = {this.state.scores[0]}
           currentScore = {this.state.currentScore[0]}
-          className ={this.state.activePlayer === 0 ? "player  player--active" : "player"}
-          id = "0"
+          className ={this.state.activePlayer === 0  ? "player  player--active" : "player"}
         />
         <Player 
           score = {this.state.scores[1]}
           currentScore = {this.state.currentScore[1]}
           className = {this.state.activePlayer === 0 ? "player" : "player player--active"}
-          id = "1"
         />
       </main>
     </div>
