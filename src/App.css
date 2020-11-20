@@ -132,3 +132,7 @@ main {
 .player--active {
   background-color: rgba(255, 255, 255, 0.4);
 }
+
+.hidden {
+  display: none;
+}
