@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import React from 'react';
 import './App.css';
 import { render } from '@testing-library/react';
@@ -13,7 +12,7 @@ class App extends React.Component {
     scores: [0, 0],
     currentScore: [0, 0],
     dice: 0
-   }
+   };
 
   reset = () =>{
     this.setState({
@@ -55,7 +54,7 @@ class App extends React.Component {
     this.setState({scores: scores});
     if(scores[activePlayer] >= 20){
       this.setState({playing: false, dice: 0});
-    }
+    };
     this.switchPlayer(); 
   };       
   };
@@ -66,10 +65,9 @@ class App extends React.Component {
     classes += scores[activePlayer] >= 20 ? " player--winner" : " player--active";
     console.log(classes, scores[activePlayer]);
     return classes;    
-  }
- 
-  
-  
+  };
+
+    
   render(){
 
   return (
@@ -84,12 +82,12 @@ class App extends React.Component {
         <Player 
           score = {this.state.scores[0]}
           currentScore = {this.state.currentScore[0]}
-          className ={this.state.activePlayer === 0  ? this.getWinner() : "player"}
+          className ={this.state.activePlayer === 0 ? this.getWinner() : "player"}
         />
         <Player 
           score = {this.state.scores[1]}
           currentScore = {this.state.currentScore[1]}
-          className = {this.state.activePlayer === 0  ?  "player" : this.getWinner() }
+          className = {this.state.activePlayer === 0  ? "player" : this.getWinner() }
         />
       </main>
     </div>
