@@ -42,7 +42,7 @@ class App extends React.Component {
 
   switchPlayer = () => {
     let active = this.state.activePlayer;
-    active = active === 0 ?  1: 0;
+    active = active === 0 ?  1 : 0;
     this.setState({activePlayer: active, currentScore: [0, 0]});
   }
 
@@ -60,6 +60,14 @@ class App extends React.Component {
   };       
   };
 
+  getWinner = () => {
+    const {scores, activePlayer} = this.state;
+    let classes = "player";   
+    classes += scores[activePlayer] >= 20 ? " player--winner" : " player--active";
+    console.log(classes, scores[activePlayer]);
+    return classes;    
+  }
+ 
   
   
   render(){
@@ -76,12 +84,12 @@ class App extends React.Component {
         <Player 
           score = {this.state.scores[0]}
           currentScore = {this.state.currentScore[0]}
-          className ={this.state.activePlayer === 0  ? "player  player--active" : "player"}
+          className ={this.state.activePlayer === 0  ? this.getWinner() : "player"}
         />
         <Player 
           score = {this.state.scores[1]}
           currentScore = {this.state.currentScore[1]}
-          className = {this.state.activePlayer === 0 ? "player" : "player player--active"}
+          className = {this.state.activePlayer === 0  ?  "player" : this.getWinner() }
         />
       </main>
     </div>

@@ -1,7 +1,5 @@
 import React from 'react';
 import './player.css';
-import {RollDice} from './rollDiceButton';
-
 
 
 export class Player extends React.Component {
