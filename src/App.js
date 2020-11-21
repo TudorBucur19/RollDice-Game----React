@@ -10,7 +10,7 @@ class App extends React.Component {
     playing: true,
     activePlayer: 0,
     scores: [0, 0],
-    currentScore: [0, 0],
+    currentScore: 0,
     dice: 0
    };
 
@@ -19,7 +19,7 @@ class App extends React.Component {
       playing: true,
       activePlayer: 0,
       scores: [0, 0],
-      currentScore: [0, 0],
+      currentScore: 0,
       dice: 0
     });
    };
@@ -27,10 +27,10 @@ class App extends React.Component {
 
   rollDice = () => {
     if(this.state.playing){    
-      const {activePlayer, currentScore} = this.state;
+      let {activePlayer, currentScore} = this.state;
       let currentDice = Math.trunc(Math.random()*6)+1;
       if(currentDice !== 1){        
-        currentScore[activePlayer] += currentDice;            
+        currentScore += currentDice;            
         this.setState({dice: currentDice, currentScore: currentScore});        
       } else {
         this.setState({dice: currentDice});
@@ -42,14 +42,14 @@ class App extends React.Component {
   switchPlayer = () => {
     let active = this.state.activePlayer;
     active = active === 0 ?  1 : 0;
-    this.setState({activePlayer: active, currentScore: [0, 0]});
+    this.setState({activePlayer: active, currentScore: 0});
   }
 
   btnHold = () => {
     if(this.state.playing){
     const {activePlayer, scores, currentScore} = this.state;
     let score = scores[activePlayer];
-    score += currentScore[activePlayer];  
+    score += currentScore;  
     scores[activePlayer] = score;
     this.setState({scores: scores});
     if(scores[activePlayer] >= 20){
@@ -59,35 +59,40 @@ class App extends React.Component {
   };       
   };
 
-  getWinner = () => {
-    const {scores, activePlayer} = this.state;
-    let classes = "player";   
-    classes += scores[activePlayer] >= 20 ? " player--winner" : " player--active";
-    console.log(classes, scores[activePlayer]);
-    return classes;    
-  };
+  
+  getClassNames = (activePlayer) => {
+    const {scores} = this.state;
+    let classes = "player";
+    if(activePlayer === this.state.activePlayer){
+      classes += " player--active";
+    }else{
+      classes = "player";
+    }
+    classes += scores[activePlayer] >= 20 ? " player--winner" : "";
+    return classes;
+    };
+  
 
     
   render(){
-
   return (
     <div className="App">
       <main className = "main">
         <img src={`../images/dice-${this.state.dice}.png`} 
-        alt="Playing dice" 
-        className={this.state.dice === 0 ? "dice hidden" : "dice"} />
+          alt="Playing dice" 
+          className={this.state.dice === 0 ? "dice hidden" : "dice"} />
         <button className="btn btn--new" onClick={this.reset}>🔄 New game</button>
         <button className="btn btn--roll" onClick={this.rollDice}>🎲Roll dice</button>
         <button className="btn btn--hold" onClick={this.btnHold}>📥 Hold</button>
         <Player 
           score = {this.state.scores[0]}
-          currentScore = {this.state.currentScore[0]}
-          className ={this.state.activePlayer === 0 ? this.getWinner() : "player"}
+          currentScore = {this.state.activePlayer === 0 ? this.state.currentScore : 0}
+          className ={this.getClassNames(0)}
         />
         <Player 
           score = {this.state.scores[1]}
-          currentScore = {this.state.currentScore[1]}
-          className = {this.state.activePlayer === 0  ? "player" : this.getWinner() }
+          currentScore = {this.state.activePlayer === 1 ? this.state.currentScore : 0}
+          className = {this.getClassNames(1)}
         />
       </main>
     </div>

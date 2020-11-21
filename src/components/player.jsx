@@ -2,21 +2,18 @@ import React from 'react';
 import './player.css';
 
 
-export class Player extends React.Component {
-
+export const Player = ({className, score, currentScore}) => {
                 
-      render(){
       return(
-      <section className={this.props.className}>
+      <section className={className}>
         <h2 className="name" >Player</h2>
-        <p className="score" >{this.props.score}</p>
+        <p className="score" >{score}</p>
         <div className="current">
           <p className="current-label">Current</p>
-          <p className="current-score" >{this.props.currentScore}</p>
+          <p className="current-score" >{currentScore}</p>
         </div>
       </section>
-      )
-    }
+      )    
 };
 
  
